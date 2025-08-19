@@ -41,7 +41,13 @@ public class SecurityConfig {
             .formLogin(Customizer.withDefaults())
             .logout(Customizer.withDefaults())
             .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
+            .csrf(csrf -> csrf.ignoringRequestMatchers(
+                "/h2-console/**",
+                "/cube/**",
+                "/savings/**",
+                "/analysis/maverick/**",
+                "/report/**"
+            ));
         return http.build();
     }
 
