@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maverick Spend</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/analysis/dashboard">Spend Analytics</a>
+    </div>
+    
+    
+</nav>
+<main class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between">
+            <span>Maverick Spend Detections</span>
+            <form method="post" action="/analysis/maverick/detect">
+                <button class="btn btn-sm btn-primary">Run Detection</button>
+            </form>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead><tr><th>Reason</th><th>Txn ID</th><th class="text-end">Amount</th><th>Detected At</th></tr></thead>
+                <tbody>
+                <tr th:each="m : ${detections}">
+                    <td th:text="${m.reason}">-</td>
+                    <td th:text="${m.spendTransactionId}">-</td>
+                    <td class="text-end" th:text="${m.amount}">0</td>
+                    <td th:text="${m.detectedAt}">-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spend Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/analysis/dashboard">Spend Analytics</a>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/savings">Savings</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/report">Reports</a></li>
+        </ul>
+    </div>
+</nav>
+<main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 th:text="${report.title}">Spend Report</h3>
+        <div>
+            <a class="btn btn-outline-primary btn-sm" href="/report/export/csv">Export CSV</a>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="small text-muted">As of</div>
+                    <div class="h5" th:text="${report.asOfDate}">-</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="small text-muted">Total Spend</div>
+                    <div class="h5" th:text="${#numbers.formatDecimal(report.analytics.totalSpend, 0, 'COMMA', 2, 'POINT')}">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="small text-muted">Transactions</div>
+                    <div class="h5" th:text="${report.analytics.transactionCount}">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">Savings Initiatives</div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead>
+                <tr>
+                    <th>Initiative</th>
+                    <th>Category</th>
+                    <th>Supplier</th>
+                    <th>Baseline</th>
+                    <th>Realized</th>
+                    <th>Savings</th>
+                    <th>Period</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="s : ${report.savings}">
+                    <td th:text="${s.initiativeName}">-</td>
+                    <td th:text="${s.categoryCode}">-</td>
+                    <td th:text="${s.supplierName}">-</td>
+                    <td th:text="${#numbers.formatDecimal(s.baselineSpend, 0, 'COMMA', 2, 'POINT')}">0</td>
+                    <td th:text="${#numbers.formatDecimal(s.realizedSpend, 0, 'COMMA', 2, 'POINT')}">0</td>
+                    <td th:text="${#numbers.formatDecimal(s.savings, 0, 'COMMA', 2, 'POINT')}">0</td>
+                    <td th:text="${s.period}">-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+

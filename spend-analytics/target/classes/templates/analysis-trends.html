@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trend Analysis</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/analysis/dashboard">Spend Analytics</a>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/analysis/suppliers">Suppliers</a></li>
+            <li class="nav-item"><a class="nav-link" href="/analysis/categories">Categories</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/analysis/trends">Trends</a></li>
+        </ul>
+    </div>
+</nav>
+<main class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header">Monthly Trend</div>
+        <div class="card-body">
+            <canvas id="trend"></canvas>
+        </div>
+    </div>
+</main>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+const trendData = /*[[${analytics.monthlyTrend}]]*/ {};
+const labels = Object.keys(trendData || {});
+const values = labels.map(k => Number(trendData[k]));
+new Chart(document.getElementById('trend'), {
+    type: 'line',
+    data: { labels, datasets: [{ label: 'Spend', data: values, borderColor: '#0d6efd' }] },
+    options: { responsive: true }
+});
+/*]]>*/
+</script>
+
+</body>
+</html>
+

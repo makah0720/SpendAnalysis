@@ -1,0 +1,4 @@
+#!/bin/sh
+BASEDIR=/usr/bin
+JAVA_EXE=java
+exec  -Dmaven.multiModuleProjectDirectory= -cp /.mvn/wrapper/maven-wrapper.jar org.apache.maven.wrapper.MavenWrapperMain 
