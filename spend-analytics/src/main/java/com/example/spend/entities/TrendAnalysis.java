@@ -19,6 +19,7 @@ public class TrendAnalysis {
     private Long id;
     private String dimension;
     private LocalDate period;
-    private BigDecimal value;
+    @Column(name = "metric_value")
+    private BigDecimal metricValue;
 }
 
