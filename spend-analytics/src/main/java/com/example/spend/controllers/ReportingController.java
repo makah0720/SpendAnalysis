@@ -27,16 +27,16 @@ public class ReportingController {
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping
     public String report(Model model,
-                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+                         @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                         @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         model.addAttribute("report", reportingService.generateReport(start, end));
         return "report";
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping(value = "/export/csv", produces = "text/csv")
-    public ResponseEntity<byte[]> exportCsv(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+    public ResponseEntity<byte[]> exportCsv(@RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                            @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         SpendReportDTO dto = reportingService.generateReport(start, end);
         StringBuilder sb = new StringBuilder();
         sb.append("Title,AsOfDate,TotalSpend,TransactionCount\n");
@@ -53,8 +53,8 @@ public class ReportingController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping(value = "/export/pdf")
-    public ResponseEntity<byte[]> exportPdf(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+    public ResponseEntity<byte[]> exportPdf(@RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                            @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         SpendReportDTO dto = reportingService.generateReport(start, end);
         byte[] bytes = ExportUtils.exportPdf(dto);
         return ResponseEntity.ok()
@@ -66,8 +66,8 @@ public class ReportingController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping(value = "/export/xlsx")
-    public ResponseEntity<byte[]> exportExcel(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                              @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+    public ResponseEntity<byte[]> exportExcel(@RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                              @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         SpendReportDTO dto = reportingService.generateReport(start, end);
         byte[] bytes = ExportUtils.exportExcel(dto);
         return ResponseEntity.ok()

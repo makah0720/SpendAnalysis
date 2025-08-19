@@ -22,8 +22,8 @@ public class SpendAnalysisController {
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/analysis/dashboard")
     public String dashboard(Model model,
-                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+                            @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                            @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         model.addAttribute("analytics", analysisService.aggregate(start, end));
         return "dashboard";
     }
@@ -31,8 +31,8 @@ public class SpendAnalysisController {
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/analysis/suppliers")
     public String supplierAnalysis(Model model,
-                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+                                   @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                   @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         model.addAttribute("analytics", analysisService.aggregate(start, end));
         return "analysis-suppliers";
     }
@@ -40,8 +40,8 @@ public class SpendAnalysisController {
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/analysis/categories")
     public String categoryAnalysis(Model model,
-                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+                                   @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                   @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         model.addAttribute("analytics", analysisService.aggregate(start, end));
         return "analysis-categories";
     }
@@ -49,8 +49,8 @@ public class SpendAnalysisController {
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/analysis/trends")
     public String trends(Model model,
-                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+                         @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                         @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         model.addAttribute("analytics", analysisService.aggregate(start, end));
         return "analysis-trends";
     }
